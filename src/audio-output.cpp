@@ -2,6 +2,7 @@
 #include <QtQuick>
 #endif
 
+#include <QtQuick>
 #include <sailfishapp.h>
 #include <QString>
 #include <QQuickView>

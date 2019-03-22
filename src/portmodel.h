@@ -55,7 +55,7 @@ public:
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 	int roleShortName() { return ROLE_SHORT_NAME; }
 signals:
-	void activeIndexChanged();
+	void activeIndexChanged(int newIndex);
 	void error(QString message);
 private:
 	QList<Port> ports;

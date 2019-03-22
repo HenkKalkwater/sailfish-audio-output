@@ -17,9 +17,9 @@
    id="svg8"
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
    sodipodi:docname="icon.svg"
-   inkscape:export-filename="/home/chris/Programmeren/sailfish/audio-output/icons/108x108/audio-output.png"
-   inkscape:export-xdpi="60.279068"
-   inkscape:export-ydpi="60.279068">
+   inkscape:export-filename="/home/chris/Programmeren/sailfish/audio-output/icons/86x86/audio-output.png"
+   inkscape:export-xdpi="48"
+   inkscape:export-ydpi="48">
   <defs
      id="defs2">
     <linearGradient
@@ -50,11 +50,11 @@
        inkscape:collect="always"
        id="lineGradient-6">
       <stop
-         style="stop-color:#551a55;stop-opacity:1"
+         style="stop-color:#781a78;stop-opacity:1"
          offset="0"
          id="stop43" />
       <stop
-         style="stop-color:#330b33;stop-opacity:1"
+         style="stop-color:#4b1a4b;stop-opacity:1"
          offset="1"
          id="stop45" />
     </linearGradient>
@@ -93,9 +93,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="16.834287"
-     inkscape:cy="36.103899"
+     inkscape:zoom="1.4"
+     inkscape:cx="-204.41979"
+     inkscape:cy="92.1417"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -127,7 +127,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>

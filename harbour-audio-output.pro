@@ -10,23 +10,23 @@
 #   - translation filenames have to be changed
 
 # The name of your application
-TARGET = audio-output
+TARGET = harbour-audio-output
 
 CONFIG += sailfishapp
 
 SOURCES += src/audio-output.cpp \
     src/portmodel.cpp
 
-DISTFILES += qml/audio-output.qml \
+DISTFILES += \
     qml/cover/CoverPage.qml \
-    rpm/audio-output.changes.in \
-    rpm/audio-output.changes.run.in \
-    rpm/audio-output.spec \
-    rpm/audio-output.yaml \
+    rpm/harbour-audio-output.changes.run \
+    rpm/harbour-audio-output.spec \
     translations/*.ts \
-    audio-output.desktop \
-    translations/audio-output.ts \
-    qml/pages/SelectPage.qml
+    harbour-audio-output.desktop \
+    qml/pages/SelectPage.qml \
+    rpm/harbour-audio-output.changes \
+    rpm/harbour-audio-output.yaml \
+    qml/harbour-audio-output.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 

@@ -37,12 +37,12 @@ void PortModel::update(bool force) {
 	// Start command
 	QProcess listCommand;
 	QProcessEnvironment env;
-	// The command might output different things in other languages
-	QStringList things = listCommand.processEnvironment().systemEnvironment().toStringList();
 
-	listCommand.processEnvironment().insert("LC_ALL", "C");
-	listCommand.processEnvironment().insert("LANG", "C");
-	listCommand.processEnvironment().insert("LANGUAGE", "C");
+	// The command might output different things in other languages
+	// but our parsing method is based on English.
+	env.insert(listCommand.processEnvironment().systemEnvironment());
+	env.insert("LC_ALL", "C");
+	listCommand.setProcessEnvironment(env);
 	listCommand.start("pactl", QStringList() << "list" << "sinks");
 	// Wait until it is finished.
 	listCommand.waitForFinished(-1);
@@ -83,7 +83,7 @@ void PortModel::update(bool force) {
 					if (!port->active) {
 						if (firstActive) {
 							this->m_activeIndex = i;
-							emit activeIndexChanged();
+							emit activeIndexChanged(m_activeIndex);
 							firstActive = false;
 						}
 						qDebug() << "Active: " + port->shortName;

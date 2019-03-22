@@ -41,14 +41,13 @@ CoverBackground {
 		highlightRangeMode: "StrictlyEnforceRange"
 		onModelChanged: console.log("Model updated")
 		keyNavigationWraps: true
+
 		function toPrev() {
-			decrementCurrentIndex();
-			root.qmlSignal(Ports.nameOf(currentIndex))
+			root.qmlSignal(Ports.nameOf((Ports.activeIndex - 1 + Ports.rowCount()) % Ports.rowCount()))
 			Ports.update();
 		}
 		function toNext() {
-			incrementCurrentIndex();
-			root.qmlSignal(Ports.nameOf(currentIndex))
+			root.qmlSignal(Ports.nameOf((Ports.activeIndex + 1) % Ports.rowCount()))
 			Ports.update();
 		}
 	}

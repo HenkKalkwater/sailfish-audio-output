@@ -1,9 +1,9 @@
 [Desktop Entry]
 Type=Application
 X-Nemo-Application-Type=silica-qt5
-Icon=audio-output
-Exec=audio-output
-Name=audio-output
+Icon=harbour-audio-output
+Exec=harbour-audio-output
+Name=Audio Output
 # translation example:
 # your app name in German locale (de)
 #
