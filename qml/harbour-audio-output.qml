@@ -15,7 +15,9 @@ ApplicationWindow
 	Connections {
 		target: Ports
 		onError: function(message) {
-			portError.summary = qsTr("Error: %s", message)
+			console.log("Error: ", message)
+			/*: Notification shown when the command line tool gives an error */
+			portError.summary = qsTr("Error: %1").arg(message)
 			portError.urgency = Critical
 			portError.publish()
 		}

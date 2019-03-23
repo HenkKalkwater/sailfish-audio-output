@@ -67,10 +67,12 @@ Page {
 				}
 
 				Label {
-					/*: Available refers to a certain port being available */
-					/*: Unavailable refers to a cetrain port not being available */
-					text: (model.available ? qsTr("Available") : qsTr("Not available")) +
-					/*: Priority has to do something with the preference of port */
+					text: (model.available
+							/*: Available refers to a certain port being available */
+						   ? qsTr("Available")
+							/*: Unavailable refers to a cetrain port not being available */
+						   : qsTr("Not available")) +
+						/*: Priority has to do something with the preference of port */
 						 " | " + qsTr("Priority: %1").arg(model.priority) +
 						 " | " + model.shortName
 					color: Theme.secondaryColor
