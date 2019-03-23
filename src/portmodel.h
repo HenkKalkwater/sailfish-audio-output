@@ -7,7 +7,8 @@
 #include <QDebug>
 
 struct Port {
-	QString port;
+	QString sink;
+	QString sinkDescription;
 	QString shortName;
 	QString longName;
 	int priority;
@@ -35,7 +36,8 @@ public:
 		PRIORITY,
 		AVAILABLE,
 		ACTIVE,
-		PORT
+		SINK,
+		SINK_DESCRIPTION
 	};
 	Q_PROPERTY(int roleShortName READ roleShortName)
 	Q_PROPERTY(int activeIndex READ activeIndex NOTIFY activeIndexChanged)
@@ -46,6 +48,11 @@ public:
 	Q_INVOKABLE
 	QString nameOf(int index) {
 		if (index >= 0 && index < ports.size()) return ports[index].shortName;
+		return "";
+	}
+	Q_INVOKABLE
+	QString sinkOf(int index) {
+		if (index >= 0 && index < ports.size()) return ports[index].sink;
 		return "";
 	}
 	int activeIndex() { return m_activeIndex; }

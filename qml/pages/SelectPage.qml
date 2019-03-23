@@ -39,9 +39,10 @@ Page {
 			}
 		}
 		anchors.fill: parent
+		/*:Header of the page */
 		header: PageHeader { title: qsTr("Select audio output")}
 		model: Ports
-		section.property: "port"
+		section.property: "sinkDescription"
 		section.delegate: sectionHeading
 
 		delegate: BackgroundItem {
@@ -66,8 +67,11 @@ Page {
 				}
 
 				Label {
+					/*: Available refers to a certain port being available */
+					/*: Unavailable refers to a cetrain port not being available */
 					text: (model.available ? qsTr("Available") : qsTr("Not available")) +
-						 " | " + qsTr("Priority: ") + model.priority +
+					/*: Priority has to do something with the preference of port */
+						 " | " + qsTr("Priority: %1").arg(model.priority) +
 						 " | " + model.shortName
 					color: Theme.secondaryColor
 					font.pixelSize: Theme.fontSizeSmall
@@ -76,12 +80,13 @@ Page {
 				}
 			}
 			onClicked: {
-				root.qmlSignal(model.shortName)
+				root.qmlSignal(model.sink, model.shortName)
 				Ports.update()
 			}
 		}
 		ViewPlaceholder {
 			enabled: outputList.count === 0;
+			/*: Shown when no ports/sinks could be found */
 			text: qsTr("Couldn't find any audio outputs")
 		}
 	}

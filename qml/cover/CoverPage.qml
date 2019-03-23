@@ -9,6 +9,7 @@ CoverBackground {
 		id: title
 		anchors.top: parent.top
 		anchors.horizontalCenter: parent.horizontalCenter
+		/*: Header of the cover */
 		text: qsTr("Audio output")
 		color: Theme.primaryColor
 		padding: Theme.paddingLarge
@@ -43,11 +44,14 @@ CoverBackground {
 		keyNavigationWraps: true
 
 		function toPrev() {
-			root.qmlSignal(Ports.nameOf((Ports.activeIndex - 1 + Ports.rowCount()) % Ports.rowCount()))
+			var newIndex = Ports.activeIndex - 1;
+			if (newIndex < 0) newIndex += Ports.rowCount()
+			root.qmlSignal(Ports.sinkOf(newIndex), Ports.nameOf(newIndex))
 			Ports.update();
 		}
 		function toNext() {
-			root.qmlSignal(Ports.nameOf((Ports.activeIndex + 1) % Ports.rowCount()))
+			var newIndex = (Ports.activeIndex + 1) % Ports.rowCount();
+			root.qmlSignal(Ports.sinkOf(newIndex), Ports.nameOf(newIndex))
 			Ports.update();
 		}
 	}

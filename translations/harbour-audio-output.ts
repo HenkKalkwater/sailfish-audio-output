@@ -4,8 +4,9 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <location filename="../qml/cover/CoverPage.qml" line="12"/>
+        <location filename="../qml/cover/CoverPage.qml" line="13"/>
         <source>Audio output</source>
+        <extracomment>Header of the cover</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -17,28 +18,31 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="42"/>
+        <location filename="../qml/pages/SelectPage.qml" line="43"/>
         <source>Select audio output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="69"/>
+        <location filename="../qml/pages/SelectPage.qml" line="72"/>
         <source>Available</source>
+        <extracomment>Available refers to a certain port being available Unavailable refers to a cetrain port not being available</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="69"/>
+        <location filename="../qml/pages/SelectPage.qml" line="72"/>
         <source>Not available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="70"/>
-        <source>Priority: </source>
+        <location filename="../qml/pages/SelectPage.qml" line="74"/>
+        <source>Priority: %1</source>
+        <extracomment>Priority has to do something with the preference of port</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="85"/>
+        <location filename="../qml/pages/SelectPage.qml" line="90"/>
         <source>Couldn&apos;t find any audio outputs</source>
+        <extracomment>Shown when no ports/sinks could be found</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -20,8 +20,10 @@ QVariant PortModel::data(const QModelIndex &index, int role) const
 		return ports[index.row()].priority;
 	case ACTIVE:
 		return ports[index.row()].active;
-	case PORT:
-		return ports[index.row()].port;
+	case SINK:
+		return ports[index.row()].sink;
+	case SINK_DESCRIPTION:
+		return ports[index.row()].sinkDescription;
 	default:
 		return QVariant();
 	}
@@ -62,7 +64,8 @@ void PortModel::update(bool force) {
 	}
 
 	int indentation = 0;
-	QStringRef currentPort;
+	QStringRef currentSink;
+	QStringRef currentSinkDescription;
 	// Workaround so that the cover only goes to 1 of the active sinks
 	bool firstActive = false;
 	bool inPortSection = false;
@@ -70,27 +73,26 @@ void PortModel::update(bool force) {
 		for (indentation = 0; indentation < line.length(); indentation++) {
 			if (line.data()[indentation] != '\t') break;
 		}
-		if (line.startsWith("\tDescription: ")) {
-			currentPort = line.mid(14);
-		}
+		if (line.startsWith("\tName: ")) currentSink = line.mid(7);
+		if (line.startsWith("\tDescription: ")) currentSinkDescription = line.mid(14);
 		if (inPortSection && indentation < 2) inPortSection = false;
 		if (line.startsWith("\tActive Port:")) {
 			QStringRef activePortName = line.mid(14);
 			//qDebug() << activePortName;
 			int i = 0;
 			for (QList<Port>::iterator port = ports.begin(); port != ports.end(); port++) {
-				if (port->port == currentPort && port->shortName == activePortName) {
+				if (port->sink == currentSink && port->shortName == activePortName) {
 					if (!port->active) {
 						if (firstActive) {
 							this->m_activeIndex = i;
-							emit activeIndexChanged(m_activeIndex);
+							emit activeIndexChanged(i);
 							firstActive = false;
 						}
-						qDebug() << "Active: " + port->shortName;
+						qDebug() << "Active: " + port->shortName << " (i: " << i << ")";
 						port->active = true;
 						this->dataChanged(this->index(i), this->index(i));
 					}
-				} else if(port->port == currentPort && port->active == true) {
+				} else if(port->sink == currentSink && port->active == true) {
 					port->active = false;
 					this->dataChanged(this->index(i), this->index(i));
 				}
@@ -111,7 +113,8 @@ void PortModel::update(bool force) {
 			int firstColonFromBracket = line.indexOf(':', firstBracket);
 			int firstCommaFromBracket = line.indexOf(',', firstBracket);
 			Port port;
-			port.port = currentPort.toString();
+			port.sink = currentSink.toString();
+			port.sinkDescription = currentSinkDescription.toString();
 			port.shortName = line.mid(2, firstColon - 2).toString();
 			port.longName = line.mid(firstColon + 2, firstBracket - firstColon - 2).toString();
 			port.priority = line.mid(firstColonFromBracket + 2, firstCommaFromBracket - firstColonFromBracket - 2).toInt();
@@ -128,7 +131,8 @@ void PortModel::update(bool force) {
 
 QHash<int, QByteArray> PortModel::roleNames() const {
 	QHash<int, QByteArray> result;
-	result[PORT] = "port";
+	result[SINK] = "sink";
+	result[SINK_DESCRIPTION] = "sinkDescription";
 	result[SHORT_NAME] = "shortName";
 	result[LONG_NAME] = "longName";
 	result[AVAILABLE] = "available";

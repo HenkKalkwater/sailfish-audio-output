@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
 	});
 	view->setSource(SailfishApp::pathToMainQml());
 	view->show();
-	QObject::connect(view->rootObject(), SIGNAL(qmlSignal(QString)),
-					 &listener, SLOT(cppSlot(QString)));
+	QObject::connect(view->rootObject(), SIGNAL(qmlSignal(QString, QString)),
+					 &listener, SLOT(changeOutput(QString, QString)));
 	return app->exec();
 }

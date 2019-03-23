@@ -10,7 +10,7 @@ ApplicationWindow
 	initialPage: Component { SelectPage { } }
 	cover: Qt.resolvedUrl("cover/CoverPage.qml")
 	allowedOrientations: defaultAllowedOrientations
-	signal qmlSignal(string msg)
+	signal qmlSignal(string sink, string port)
 
 	Connections {
 		target: Ports

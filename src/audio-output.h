@@ -13,9 +13,9 @@ public:
 	explicit Listener(QObject* parent = 0) {}
 	~Listener() {}
 public slots:
-	void cppSlot(const QString &msg) {
-		qDebug() << "Called the C++ slot with message:" << msg;
-		system(qPrintable("pactl set-sink-port sink.primary " + msg));
+	void changeOutput(const QString &sink, const QString &port) {
+		qDebug() << "Changing output to sink: " << sink << ", port: " << port;
+		system(qPrintable("pactl set-sink-port " + sink + " " + port));
 	}
 };
 
