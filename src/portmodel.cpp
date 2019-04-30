@@ -1,7 +1,8 @@
 #include "portmodel.h"
 
-PortModel::PortModel(QObject *parent)
+PortModel::PortModel(pa_context* context, QObject *parent)
 	: QAbstractListModel(parent) {
+    this->context = context;
 }
 
 QVariant PortModel::data(const QModelIndex &index, int role) const

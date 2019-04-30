@@ -12,7 +12,11 @@
 # The name of your application
 TARGET = harbour-audio-output
 
-CONFIG += sailfishapp
+
+CONFIG += sailfishapp\
+        libpulse
+
+LIBS += -lpulse
 
 SOURCES += src/audio-output.cpp \
     src/portmodel.cpp

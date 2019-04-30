@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QDebug>
 
+#include <pulse/pulseaudio.h>
+
 struct Port {
 	QString sink;
 	QString sinkDescription;
@@ -41,7 +43,7 @@ public:
 	};
 	Q_PROPERTY(int roleShortName READ roleShortName)
 	Q_PROPERTY(int activeIndex READ activeIndex NOTIFY activeIndexChanged)
-	explicit PortModel(QObject *parent = nullptr);
+    explicit PortModel(pa_context* context, QObject *parent = nullptr);
 
 	Q_INVOKABLE
 	void update(bool force = false);
@@ -66,6 +68,7 @@ signals:
 	void error(QString message);
 private:
 	QList<Port> ports;
+    pa_context* context;
 	bool firstRun = true;
 	int m_activeIndex = 0;
 	int ROLE_SHORT_NAME = SHORT_NAME;
