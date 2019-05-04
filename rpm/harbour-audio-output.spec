@@ -13,10 +13,10 @@ Name:       harbour-audio-output
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Change Audio Output
-Version:    0.1.1
-Release:    1
+Version:    0.2.0
+Release:    2
 Group:      Qt/Qt
-License:    LICENSE
+License:    GPLv3
 URL:        http://example.org/
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-audio-output.yaml

@@ -21,11 +21,12 @@
     </message>
     <message>
         <source>Available</source>
-        <extracomment>Available refers to a certain port being available Unavailable refers to a cetrain port not being available</extracomment>
+        <extracomment>Available refers to a certain port being available</extracomment>
         <translation>Beschikbaar</translation>
     </message>
     <message>
         <source>Not available</source>
+        <extracomment>Unavailable refers to a cetrain port not being available</extracomment>
         <translation>Onbeschikbaar</translation>
     </message>
     <message>
@@ -43,8 +44,9 @@
 <context>
     <name>harbour-audio-output</name>
     <message>
-        <source>Error: %s</source>
-        <translation>Fout: %1</translation>
+        <source>Error: %1</source>
+        <extracomment>Notification shown when the command line tool gives an error</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

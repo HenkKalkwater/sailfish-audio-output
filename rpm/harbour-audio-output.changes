@@ -11,6 +11,8 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Sat May 4 2019 Henk Kalkwater <cjljosten@gmail.com> 0.2.0-2
+- Fixed a mistake where the french translation was not included in the package.
 * Tue Apr 30 2019 Henk Kalkwater <cjljosten@gmail.com> 0.2.0-1
 - Added French translation by Quentí
 

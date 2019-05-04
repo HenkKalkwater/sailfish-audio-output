@@ -40,7 +40,8 @@ CONFIG += sailfishapp_i18n
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += \
             translations/harbour-aduio-output.ts \
-            translations/harbour-audio-output-nl.ts
+            translations/harbour-audio-output-nl.ts \
+            translations/harbour-audio-output-fr.ts
 
 HEADERS += \
     src/audio-output.h \
