@@ -11,10 +11,12 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Tue Apr 30 2019 Henk Kalkwater <cjljosten@gmail.com> 0.2.0-1
+- Added French translation by Quentí
+
 
 * Sat Mar 23 2019 Henk Kalkwater <cjljosten@gmail.com> 0.1.1-1
 - Removed a leftover hardcoded reference to "sink.primary". This should make it compatible with devices other than the Xperia X.
 
 * Fri Mar 22 2019 Henk Kalkwater <cjljosten@gmail.com> 0.1.0-1
 - Initial release
-
