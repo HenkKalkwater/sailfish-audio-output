@@ -11,3 +11,4 @@ Name=Audio Output
 # a different app name in German locale (de).
 Name[nl]=Geluidsuitvoer
 Name[fr]=Sortie audio
+Name[zh_CN]=音频输出
