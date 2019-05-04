@@ -41,7 +41,8 @@ CONFIG += sailfishapp_i18n
 TRANSLATIONS += \
             translations/harbour-aduio-output.ts \
             translations/harbour-audio-output-nl.ts \
-            translations/harbour-audio-output-fr.ts
+            translations/harbour-audio-output-fr.ts \
+            translations/harbour-audio-output-zh_CN.ts
 
 HEADERS += \
     src/audio-output.h \
