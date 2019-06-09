@@ -19,7 +19,8 @@ CONFIG += sailfishapp\
 LIBS += -lpulse
 
 SOURCES += src/audio-output.cpp \
-    src/portmodel.cpp
+    src/portmodel.cpp \
+    src/pamainloopthread.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -46,4 +47,5 @@ TRANSLATIONS += translations/harbour-audio-output-nl.ts
 
 HEADERS += \
     src/audio-output.h \
-    src/portmodel.h
+    src/portmodel.h \
+    src/pamainloopthread.h
