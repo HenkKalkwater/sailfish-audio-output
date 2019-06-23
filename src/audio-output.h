@@ -8,6 +8,7 @@
 #include <pulse/pulseaudio.h>
 
 #include "portmodel.h"
+#include "sinkmodel.h"
 #include "pamainloopthread.h"
 
 class Listener: public QObject
@@ -19,6 +20,7 @@ public:
 	~Listener() {}
     /**
      * @brief init Initialises the connection to the PulseAudio server
+     * @note Very much inspired by Godot's PulseAudio code
      */
     void init();
 

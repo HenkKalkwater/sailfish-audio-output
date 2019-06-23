@@ -23,13 +23,13 @@ CoverBackground {
 		anchors.right: parent.right
 		anchors.bottom: coverActionArea.top
 		anchors.bottomMargin: Theme.paddingLarge
-		model: Ports
+        model: Sinks
 		preferredHighlightBegin: y
 		preferredHighlightEnd: y + height / 4
 		delegate: Label {
 			id: outputLabel
 			padding: Theme.paddingMedium
-			text: model.longName
+            text: model.description
 			font.pixelSize: Theme.fontSizeSmall
 			color: model.active ? Theme.primaryColor : Theme.secondaryColor
 			width: parent.width
@@ -37,7 +37,7 @@ CoverBackground {
 			maximumLineCount: 2
 			wrapMode: "WordWrap"
 		}
-		currentIndex: Ports.activeIndex
+        currentIndex: Sinks.activeIndex
 		snapMode: ListView.SnapToItem
 		highlightRangeMode: "StrictlyEnforceRange"
 		onModelChanged: console.log("Model updated")

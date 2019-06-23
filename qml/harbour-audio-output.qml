@@ -13,7 +13,7 @@ ApplicationWindow
 	signal qmlSignal(string sink, string port)
 
 	Connections {
-		target: Ports
+        target: Sinks
 		onError: function(message) {
 			portError.summary = qsTr("Error: %s", message)
 			portError.urgency = Critical

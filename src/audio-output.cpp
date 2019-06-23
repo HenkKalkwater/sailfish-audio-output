@@ -30,12 +30,14 @@ int main(int argc, char *argv[]) {
     listener.init();
     QGuiApplication* app = SailfishApp::application(argc, argv);
 	QQuickView* view = SailfishApp::createView();
-	qmlRegisterSingletonType<PortModel>("me.henkkalkwater", 1, 0, "Ports", [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
+    qRegisterMetaType<PortModel*>("PortModel*");
+    qmlRegisterType<PortModel>("me.henkkalkwater", 1, 0, "Ports");
+    qmlRegisterSingletonType<SinkModel>("me.henkkalkwater", 1, 0, "Sinks", [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
 		Q_UNUSED(engine)
 		Q_UNUSED(scriptEngine)
 
-        PortModel* portModel = new PortModel(listener.getPaContext());
-		return portModel;
+        SinkModel* sinkModel = new SinkModel(listener.getPaContext());
+        return sinkModel;
 	});
 	view->setSource(SailfishApp::pathToMainQml());
 	view->show();
@@ -63,13 +65,18 @@ void Listener::init() {
     }
     qDebug() << "Connecting to PulseAudio...";
 
+    // Busywaiting is ugly, but I have no better solution for the time being.
+    // Still, we're waiting for localhost to respond, how bad can it be?
     while (this->paReady == 0) {
         pa_mainloop_iterate(this->mainloop, 1, NULL);
     };
     qDebug() << "PulseAudio is ready to roll";
 
+    // Creates a thread that will run the mainloop
     this->mainloopThread = new PAMainloopThread(this->mainloop);
     this->mainloopThread->start();
+
+    pa_context_subscribe(this->context, PA_SUBSCRIPTION_MASK_ALL, nullptr, nullptr);
 }
 
 void Listener::stateCallback(pa_context* c, void* userdata) {
@@ -90,7 +97,10 @@ void Listener::stateCallback(pa_context* c, void* userdata) {
 }
 
 void Listener::eventCallback(pa_context *c, pa_subscription_event_type_t t, uint32_t idx, void *userdata) {
-
+    qDebug() << "New event callback: type " << t << ", index " << idx;
+    if ((t & PA_SUBSCRIPTION_EVENT_FACILITY_MASK) == PA_SUBSCRIPTION_EVENT_SINK) {
+        qDebug() << "Something with a sink";
+    }
 }
 
 void Listener::changeOutput(const QString &sink, const QString &port) {

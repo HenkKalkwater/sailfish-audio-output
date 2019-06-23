@@ -19,8 +19,11 @@ CONFIG += sailfishapp\
 LIBS += -lpulse
 
 SOURCES += src/audio-output.cpp \
+    src/pamainloopthread.cpp \
     src/portmodel.cpp \
-    src/pamainloopthread.cpp
+    src/sinkmodel.cpp \
+    src/sink.cpp \
+    src/port.cpp
 
 DISTFILES += \
     qml/cover/CoverPage.qml \
@@ -31,7 +34,8 @@ DISTFILES += \
     qml/pages/SelectPage.qml \
     rpm/harbour-audio-output.changes \
     rpm/harbour-audio-output.yaml \
-    qml/harbour-audio-output.qml
+    qml/harbour-audio-output.qml \
+    qml/pages/MainPage.qml
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
@@ -47,5 +51,8 @@ TRANSLATIONS += translations/harbour-audio-output-nl.ts
 
 HEADERS += \
     src/audio-output.h \
+    src/pamainloopthread.h \
     src/portmodel.h \
-    src/pamainloopthread.h
+    src/sinkmodel.h \
+    src/sink.h \
+    src/port.h

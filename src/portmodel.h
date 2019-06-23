@@ -8,70 +8,48 @@
 
 #include <pulse/pulseaudio.h>
 
-struct Port {
-	QString sink;
-	QString sinkDescription;
-	QString shortName;
-	QString longName;
-	int priority;
-	bool available;
-	bool active;
-	Port() {}
-	/*Port(QString port, QString shortName, QString longName, int priority, bool available, bool active) {
-		this->port = port;
-		this->shortName = shortName;
-		this->longName = longName;
-		this->priority = priority;
-		this->available = available;
-		this->active = active;
-	}*/
-};
+#include "port.h"
 
 class PortModel : public QAbstractListModel
 {
 	Q_OBJECT
-
 public:
-	enum PortRole {
-		SHORT_NAME = Qt::UserRole + 1,
-		LONG_NAME,
-		PRIORITY,
-		AVAILABLE,
-		ACTIVE,
-		SINK,
-		SINK_DESCRIPTION
-	};
-	Q_PROPERTY(int roleShortName READ roleShortName)
-	Q_PROPERTY(int activeIndex READ activeIndex NOTIFY activeIndexChanged)
-    explicit PortModel(pa_context* context, QObject *parent = nullptr);
+    PortModel() : PortModel(0, nullptr, 0, 0){}
+    explicit PortModel(const PortModel& other);
+    explicit PortModel(int index, pa_sink_port_info** info, size_t info_length, pa_sink_port_info* activeIndex,
+                       QObject *parent = nullptr);
+    enum PortRole {
+        NAME = Qt::UserRole + 1,
+        DESCRIPTION,
+        INDEX,
+        AVAILABLE,
+        PRIORITY,
+        ACTIVE
+    };
 
-	Q_INVOKABLE
-	void update(bool force = false);
-	Q_INVOKABLE
-	QString nameOf(int index) {
-		if (index >= 0 && index < ports.size()) return ports[index].shortName;
-		return "";
-	}
-	Q_INVOKABLE
-	QString sinkOf(int index) {
-		if (index >= 0 && index < ports.size()) return ports[index].sink;
-		return "";
-	}
-	int activeIndex() { return m_activeIndex; }
+    Q_PROPERTY(int index READ index CONSTANT)
 
-	int rowCount(const QModelIndex &parent) const override;
-	QHash<int, QByteArray> roleNames() const override;
-	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	int roleShortName() { return ROLE_SHORT_NAME; }
+    /**
+     * @return the index of the sink these ports belong to
+     */
+    int index() const { return m_index; }
+
+    int rowCount(const QModelIndex &parent) const override;
+    QHash<int, QByteArray> roleNames() const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
 signals:
-	void activeIndexChanged(int newIndex);
-	void error(QString message);
+    void activeIndexChanged(int newIndex);
+    void error(QString message);
 private:
-	QList<Port> ports;
-    pa_context* context;
-	bool firstRun = true;
-	int m_activeIndex = 0;
-	int ROLE_SHORT_NAME = SHORT_NAME;
-};
+    QList<Port> ports;
+    // Can't get it to work with a QList
+    //pa_sink_port_info** ports;
+    //size_t port_count;
 
+    pa_sink_port_info* m_activePort;
+    const int m_index;
+    bool active;
+};
+Q_DECLARE_METATYPE(PortModel)
 #endif // PORTMODEL_H
