@@ -4,44 +4,42 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <location filename="../qml/cover/CoverPage.qml" line="13"/>
-        <source>Audio output</source>
-        <extracomment>Header of the cover</extracomment>
-        <translation>Sortie audio</translation>
+        <location filename="../qml/cover/CoverPage.qml" line="9"/>
+        <source>Audio Output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SelectPage</name>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="37"/>
-        <source>Refresh</source>
-        <translation>Actualiser</translation>
-    </message>
-    <message>
-        <location filename="../qml/pages/SelectPage.qml" line="43"/>
+        <location filename="../qml/pages/SelectPage.qml" line="18"/>
         <source>Select audio output</source>
         <translation>Sélectionnez la sortie audio</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="72"/>
+        <location filename="../qml/pages/SelectPage.qml" line="40"/>
+        <source>No ports were found for this sink</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/pages/SelectPage.qml" line="70"/>
         <source>Available</source>
-        <extracomment>Available refers to a certain port being available</extracomment>
+        <extracomment>Available refers to a certain port being available Unavailable refers to a cetrain port not being available</extracomment>
         <translation>Disponible</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="74"/>
+        <location filename="../qml/pages/SelectPage.qml" line="70"/>
         <source>Not available</source>
-        <extracomment>Unavailable refers to a cetrain port not being available</extracomment>
         <translation>Indisponible</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="76"/>
+        <location filename="../qml/pages/SelectPage.qml" line="72"/>
         <source>Priority: %1</source>
         <extracomment>Priority has to do something with the preference of port</extracomment>
         <translation>Priorité : %1</translation>
     </message>
     <message>
-        <location filename="../qml/pages/SelectPage.qml" line="92"/>
+        <location filename="../qml/pages/SelectPage.qml" line="91"/>
         <source>Couldn&apos;t find any audio outputs</source>
         <extracomment>Shown when no ports/sinks could be found</extracomment>
         <translation>Aucune sortie audio trouvée</translation>
@@ -50,7 +48,7 @@
 <context>
     <name>harbour-audio-output</name>
     <message>
-        <location filename="../qml/harbour-audio-output.qml" line="20"/>
+        <location filename="../qml/harbour-audio-output.qml" line="19"/>
         <source>Error: %1</source>
         <extracomment>Notification shown when the command line tool gives an error</extracomment>
         <translation type="unfinished"></translation>

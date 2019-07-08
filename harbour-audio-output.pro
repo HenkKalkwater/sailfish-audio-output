@@ -59,4 +59,5 @@ HEADERS += \
     src/portmodel.h \
     src/sinkmodel.h \
     src/sink.h \
-    src/port.h
+    src/port.h \
+    src/pamainloopthread.h

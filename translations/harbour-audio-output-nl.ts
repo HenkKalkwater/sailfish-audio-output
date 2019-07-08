@@ -4,9 +4,8 @@
 <context>
     <name>CoverPage</name>
     <message>
-        <source>Audio output</source>
-        <extracomment>Header of the cover</extracomment>
-        <translation>Geluidsuitvoer</translation>
+        <source>Audio Output</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -17,12 +16,11 @@
     </message>
     <message>
         <source>Available</source>
-        <extracomment>Available refers to a certain port being available</extracomment>
+        <extracomment>Available refers to a certain port being available Unavailable refers to a cetrain port not being available</extracomment>
         <translation>Beschikbaar</translation>
     </message>
     <message>
         <source>Not available</source>
-        <extracomment>Unavailable refers to a cetrain port not being available</extracomment>
         <translation>Onbeschikbaar</translation>
     </message>
     <message>
