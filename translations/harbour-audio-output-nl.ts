@@ -12,10 +12,6 @@
 <context>
     <name>SelectPage</name>
     <message>
-        <source>Refresh</source>
-        <translation>Bijwerken</translation>
-    </message>
-    <message>
         <source>Select audio output</source>
         <translation>Kies geluidsuitvoer</translation>
     </message>
@@ -39,6 +35,10 @@
         <extracomment>Priority has to do something with the preference of port</extracomment>
         <translatorcomment>Zou &quot;prioriteit&quot; of &quot;voorkeur&quot; hierbij beter passen?</translatorcomment>
         <translation>Prioriteit: %1</translation>
+    </message>
+    <message>
+        <source>No ports were found for this sink</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

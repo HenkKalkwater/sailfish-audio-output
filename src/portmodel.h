@@ -2,73 +2,90 @@
 #define PORTMODEL_H
 
 #include <QAbstractListModel>
-#include <QProcess>
 #include <QObject>
 #include <QDebug>
+#include <QList>
 
-struct Port {
-	QString sink;
-	QString sinkDescription;
-	QString shortName;
-	QString longName;
-	int priority;
-	bool available;
-	bool active;
-	Port() {}
-	/*Port(QString port, QString shortName, QString longName, int priority, bool available, bool active) {
-		this->port = port;
-		this->shortName = shortName;
-		this->longName = longName;
-		this->priority = priority;
-		this->available = available;
-		this->active = active;
-	}*/
-};
+#include <algorithm>
+#include <iterator>
 
+#include <pulse/pulseaudio.h>
+
+#include "port.h"
+
+/**
+ * @brief Contains a list with all the ports for a single sink.
+ *
+ * This class contains a list with the ports for a single list. Ports are stored
+ * as a Port. This class is referenced by SinkModel, which also passes relevant
+ * events from the PulseAudio API to here.
+ */
 class PortModel : public QAbstractListModel
 {
 	Q_OBJECT
-
 public:
-	enum PortRole {
-		SHORT_NAME = Qt::UserRole + 1,
-		LONG_NAME,
-		PRIORITY,
-		AVAILABLE,
-		ACTIVE,
-		SINK,
-		SINK_DESCRIPTION
-	};
-	Q_PROPERTY(int roleShortName READ roleShortName)
-	Q_PROPERTY(int activeIndex READ activeIndex NOTIFY activeIndexChanged)
-	explicit PortModel(QObject *parent = nullptr);
+    explicit PortModel();
+    /**
+     * @brief Copy constructor
+     * @param other The other model to copy from.
+     */
+    explicit PortModel(const PortModel& other);
 
-	Q_INVOKABLE
-	void update(bool force = false);
-	Q_INVOKABLE
-	QString nameOf(int index) {
-		if (index >= 0 && index < ports.size()) return ports[index].shortName;
-		return "";
-	}
-	Q_INVOKABLE
-	QString sinkOf(int index) {
-		if (index >= 0 && index < ports.size()) return ports[index].sink;
-		return "";
-	}
-	int activeIndex() { return m_activeIndex; }
+    /**
+     * @brief Create a PortModel of a pa_sink_info object (see Pulseaudio documentation).
+     * @param info The PulseAudio object to generate this model of.
+     * @param parent The parent QObject.
+     */
+    explicit PortModel(pa_context* context, const pa_sink_info* info, QObject *parent = nullptr);
 
-	int rowCount(const QModelIndex &parent) const override;
-	QHash<int, QByteArray> roleNames() const override;
-	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	int roleShortName() { return ROLE_SHORT_NAME; }
+    /**
+     * @brief Roles of properties exposed to QML.
+     */
+    enum PortRole {
+        NAME = Qt::UserRole + 1,
+        DESCRIPTION,
+        INDEX,
+        AVAILABLE,
+        PRIORITY,
+        ACTIVE
+    };
+
+    Q_PROPERTY(int index READ index CONSTANT)
+
+    /**
+     * @return the PulseAudio defined index of the sink these ports belong to.
+     */
+    int index() const { return m_index; }
+
+    int rowCount(const QModelIndex &parent) const override;
+    QHash<int, QByteArray> roleNames() const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    /**
+     * @brief Update information of this port by calling the PulseAudio API.
+     */
+    void update();
+
+    Q_INVOKABLE
+    void setActivePort(QString name);
+
+    static void paSinkInfoCallback(pa_context* c, const pa_sink_info* info, int eol, void* userdata);
 signals:
-	void activeIndexChanged(int newIndex);
-	void error(QString message);
+    void activePortChanged(int newIndex);
+    void error(QString message);
 private:
-	QList<Port> ports;
-	bool firstRun = true;
-	int m_activeIndex = 0;
-	int ROLE_SHORT_NAME = SHORT_NAME;
-};
+    QList<Port> ports;
+    pa_context* m_context;
+    const pa_sink_info* m_sinkInfo;
+    size_t m_activeIndex;
+    const int m_index;
+    bool active;
 
+    /**
+     * @brief findActivePortIndex Returns the index of the given port in `ports`
+     * @param port The port to look for
+     * @return The index if found, or -1
+     */
+    int findPortIndex(pa_sink_port_info* port);
+};
 #endif // PORTMODEL_H

@@ -1,2 +1,4 @@
 .harbour-audio-output.pro.user
 .qmake.stash
+.harbour-audio-output.pro.user.*
+rpm/harbour-audio-output.spec

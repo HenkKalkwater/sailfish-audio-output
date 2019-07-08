@@ -1,142 +1,99 @@
 #include "portmodel.h"
 
-PortModel::PortModel(QObject *parent)
-	: QAbstractListModel(parent) {
+PortModel::PortModel() : QAbstractListModel(nullptr), m_index(0) {
+    qDebug() << "Empty constructor called. Everything will fail!";
 }
 
-QVariant PortModel::data(const QModelIndex &index, int role) const
-{
-	if (!index.isValid())
-		return QVariant();
+PortModel::PortModel(pa_context* context, const pa_sink_info* info, QObject* parent)
+    : QAbstractListModel(parent),
+      m_context(context), m_sinkInfo(info), m_index(info->index) {
+    qDebug() << info->n_ports << " ports found";
+    for (size_t i = 0; i < info->n_ports; i++) {
+        this->ports.append(Port(info->ports[i], i, this));
+        if (info->ports[i] == info->active_port) {
+            this->m_activeIndex = i;
+            this->ports[i].setAvailable(true);
+        }
+    }
+}
 
-	switch (role) {
-	case SHORT_NAME:
-		return ports[index.row()].shortName;
-	case LONG_NAME:
-		return ports[index.row()].longName;
-	case AVAILABLE:
-		return ports[index.row()].available;
-	case PRIORITY:
-		return ports[index.row()].priority;
-	case ACTIVE:
-		return ports[index.row()].active;
-	case SINK:
-		return ports[index.row()].sink;
-	case SINK_DESCRIPTION:
-		return ports[index.row()].sinkDescription;
-	default:
-		return QVariant();
-	}
+PortModel::PortModel(const PortModel &other) : QAbstractListModel(other.parent()), m_index(other.m_index) {
+    this->ports = QList<Port>(other.ports);
+    this->m_context = other.m_context;
+    this->m_activeIndex = other.m_activeIndex;
+    this->m_sinkInfo = other.m_sinkInfo;
+}
+
+QVariant PortModel::data(const QModelIndex &index, int role) const {
+    if (!index.isValid()) {
+        return QVariant();
+    }
+    switch (role) {
+    case NAME:
+        qDebug() << "Returning name of index " << index.row() << ": " << ports[index.row()].name();
+        return ports[index.row()].name();
+    case DESCRIPTION:
+        return ports[index.row()].description();
+    case AVAILABLE:
+        return ports[index.row()].available();
+    case PRIORITY:
+        return ports[index.row()].priority();
+    case ACTIVE:
+        return this->m_activeIndex == index.row();
+    default:
+        return QVariant();
+    }
 }
 
 int PortModel::rowCount(const QModelIndex &parent) const {
-	return ports.size();
-}
-
-void PortModel::update(bool force) {
-	bool shouldReset = this->firstRun || force;
-	this->firstRun = false;
-	// Start command
-	QProcess listCommand;
-	QProcessEnvironment env;
-
-	// The command might output different things in other languages
-	// but our parsing method is based on English.
-	env.insert(listCommand.processEnvironment().systemEnvironment());
-	env.insert("LC_ALL", "C");
-	listCommand.setProcessEnvironment(env);
-	listCommand.start("pactl", QStringList() << "list" << "sinks");
-	// Wait until it is finished.
-	listCommand.waitForFinished(-1);
-	QString output = listCommand.readAllStandardOutput();
-	QString errorOut = listCommand.readAllStandardError();
-	if (!errorOut.isEmpty()) {
-		qDebug() << "Error: " << errorOut;
-		qDebug() << output;
-		emit error(errorOut);
-	}
-	//qDebug() << "OUTPUT: " << output;
-	QVector<QStringRef> lines = output.splitRef("\n");
-
-	if (shouldReset) {
-		this->beginResetModel();
-		ports.clear();
-	}
-
-	int indentation = 0;
-	QStringRef currentSink;
-	QStringRef currentSinkDescription;
-	// Workaround so that the cover only goes to 1 of the active sinks
-	bool firstActive = false;
-	bool inPortSection = false;
-	for (QStringRef line : lines) {
-		for (indentation = 0; indentation < line.length(); indentation++) {
-			if (line.data()[indentation] != '\t') break;
-		}
-		if (line.startsWith("\tName: ")) currentSink = line.mid(7);
-		if (line.startsWith("\tDescription: ")) currentSinkDescription = line.mid(14);
-		if (inPortSection && indentation < 2) inPortSection = false;
-		if (line.startsWith("\tActive Port:")) {
-			QStringRef activePortName = line.mid(14);
-			//qDebug() << activePortName;
-			int i = 0;
-			for (QList<Port>::iterator port = ports.begin(); port != ports.end(); port++) {
-				if (port->sink == currentSink && port->shortName == activePortName) {
-					if (!port->active) {
-						if (firstActive) {
-							this->m_activeIndex = i;
-							emit activeIndexChanged(i);
-							firstActive = false;
-						}
-						qDebug() << "Active: " + port->shortName << " (i: " << i << ")";
-						port->active = true;
-						this->dataChanged(this->index(i), this->index(i));
-					}
-				} else if(port->sink == currentSink && port->active == true) {
-					port->active = false;
-					this->dataChanged(this->index(i), this->index(i));
-				}
-				i++;
-			}
-		}
-		if (line.startsWith("\tPorts:")) {
-			inPortSection = true;
-			continue;
-		}
-		//qDebug() << line;
-		//qDebug() << "CurrentPort: " << currentPort;
-
-		if (inPortSection && shouldReset) {
-			// FORMAT: \t\tsystem-name: Human-readable name (priority: 777, available/not available)
-			int firstColon = line.indexOf(':');
-			int firstBracket = line.lastIndexOf('(');
-			int firstColonFromBracket = line.indexOf(':', firstBracket);
-			int firstCommaFromBracket = line.indexOf(',', firstBracket);
-			Port port;
-			port.sink = currentSink.toString();
-			port.sinkDescription = currentSinkDescription.toString();
-			port.shortName = line.mid(2, firstColon - 2).toString();
-			port.longName = line.mid(firstColon + 2, firstBracket - firstColon - 2).toString();
-			port.priority = line.mid(firstColonFromBracket + 2, firstCommaFromBracket - firstColonFromBracket - 2).toInt();
-			port.available = line.mid(firstCommaFromBracket + 2).startsWith("available");
-			this->ports.append(port);
-			//qDebug() << "Found " << port.shortName;
-		}
-
-	}
-	if (shouldReset) {
-		this->endResetModel();
-	}
+    return this->ports.size();
 }
 
 QHash<int, QByteArray> PortModel::roleNames() const {
 	QHash<int, QByteArray> result;
-	result[SINK] = "sink";
-	result[SINK_DESCRIPTION] = "sinkDescription";
-	result[SHORT_NAME] = "shortName";
-	result[LONG_NAME] = "longName";
-	result[AVAILABLE] = "available";
-	result[PRIORITY] = "priority";
-	result[ACTIVE] = "active";
-	return result;
+    //result[SINK] = "sink";
+    //result[SINK_DESCRIPTION] = "sinkDescription";
+    result[NAME] = "name";
+    result[DESCRIPTION] = "description";
+    result[AVAILABLE] = "available";
+    result[PRIORITY] = "priority";
+    result[ACTIVE] = "active";
+    return result;
 }
+
+void PortModel::paSinkInfoCallback(pa_context* c, const pa_sink_info* info, int eol, void* userdata) {
+    PortModel* self = reinterpret_cast<PortModel*>(userdata);
+    if (eol) {
+        return;
+    } else {
+        //TODO: handle other updates related to the sink
+        for (size_t i = 0; i < info->n_ports; i++) {
+            if (info->ports[i] == info->active_port) {
+                int oldIndex = static_cast<int>(self->m_activeIndex);
+                int newIndex = static_cast<int>(i);
+                self->m_activeIndex = i;
+                self->dataChanged(self->createIndex(oldIndex, 0), self->createIndex(oldIndex, 0));
+                self->dataChanged(self->createIndex(newIndex, 0), self->createIndex(newIndex, 0));
+            }
+        }
+    }
+}
+
+void PortModel::setActivePort(QString name) {
+    pa_context_set_sink_port_by_index(this->m_context, this->m_index, name.toLatin1().constData(), nullptr, nullptr);
+}
+
+void PortModel::update() {
+    pa_context_get_sink_info_by_index(this->m_context, this->m_index, PortModel::paSinkInfoCallback, this);
+}
+
+int PortModel::findPortIndex(pa_sink_port_info* lostPort) {
+    auto it = std::find_if(ports.begin(), ports.end(), [lostPort](Port const& port)->bool {
+        return port.rawInfo() == lostPort;
+    });
+    if (it == ports.end()) {
+        return -1;
+    }
+    return std::distance(ports.begin(), it);
+}
+

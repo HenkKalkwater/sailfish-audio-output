@@ -10,10 +10,9 @@ ApplicationWindow
 	initialPage: Component { SelectPage { } }
 	cover: Qt.resolvedUrl("cover/CoverPage.qml")
 	allowedOrientations: defaultAllowedOrientations
-	signal qmlSignal(string sink, string port)
 
 	Connections {
-		target: Ports
+        target: Sinks
 		onError: function(message) {
 			console.log("Error: ", message)
 			/*: Notification shown when the command line tool gives an error */
