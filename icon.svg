@@ -17,9 +17,9 @@
    id="svg8"
    inkscape:version="0.92.4 5da689c313, 2019-01-14"
    sodipodi:docname="icon.svg"
-   inkscape:export-filename="/home/chris/Programmeren/sailfish/audio-output/icons/86x86/audio-output.png"
-   inkscape:export-xdpi="48"
-   inkscape:export-ydpi="48">
+   inkscape:export-filename="/home/chris/Programmeren/Sailfish/harbour-audio-output/icons/172x172/harbour-audio-output.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs2">
     <linearGradient
@@ -93,20 +93,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="-204.41979"
-     inkscape:cy="92.1417"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="72.676844"
+     inkscape:cy="192.67323"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
-     showgrid="true"
+     showgrid="false"
      units="px"
      inkscape:pagecheckerboard="true"
      borderlayer="false"
-     inkscape:window-width="1824"
-     inkscape:window-height="1022"
-     inkscape:window-x="96"
-     inkscape:window-y="28"
-     inkscape:window-maximized="1">
+     inkscape:window-width="952"
+     inkscape:window-height="1010"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0">
     <inkscape:grid
        type="xygrid"
        id="grid18"
@@ -138,10 +138,10 @@
      transform="translate(0,-251.49162)">
     <path
        style="fill:url(#linearGradient49);fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 44.449997,252.54996 H 22.754165 c -10.879231,0 -21.6958317,10.72129 -21.6958317,21.69583 0,10.95825 10.8013197,21.69583 21.6958317,21.69583 10.762785,0 21.695832,-10.80378 21.695832,-21.69583 z"
+       d="M 44.449997,252.54996 H 22.754165 c -10.879231,0 -21.6958317,10.72129 -21.6958317,21.69583 0,5.63889 -0.036095,21.66511 -0.036095,21.66511 0,0 16.4435096,0.0307 21.7319266,0.0307 10.762785,0 21.695832,-10.80378 21.695832,-21.69583 z"
        id="path22"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccccc"
+       sodipodi:nodetypes="ccccccc"
        inkscape:label="background" />
     <path
        style="fill:#bcc6cc;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
