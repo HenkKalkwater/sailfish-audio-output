@@ -16,6 +16,9 @@
 #include <pulse/pulseaudio.h>
 #include "sink.h"
 
+/**
+ * @brief List of sinks, exposed to QML.
+ */
 class SinkModel : public QAbstractListModel {
     Q_OBJECT
 public:

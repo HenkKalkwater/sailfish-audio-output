@@ -11,6 +11,9 @@
 #include "sinkmodel.h"
 #include "pamainloopthread.h"
 
+/**
+ * @brief Listens to events and is the root of all models used in this application.
+ */
 class Listener: public QObject
 {
 	Q_OBJECT
@@ -55,7 +58,6 @@ public:
 
     void setSinks(SinkModel* sinks) { this->m_sinks = sinks; }
 public slots:
-    void changeOutput(const QString &sink, const QString &port);
     void onAboutQuit();
 private:
     /**

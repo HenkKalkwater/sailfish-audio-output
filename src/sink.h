@@ -9,6 +9,9 @@
 
 #include "portmodel.h"
 
+/**
+ * @brief Represents a PulseAudio sink
+ */
 class Sink : public QObject
 {
     Q_OBJECT

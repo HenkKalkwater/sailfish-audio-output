@@ -5,6 +5,9 @@
 
 #include <pulse/pulseaudio.h>
 
+/**
+ * @brief Represents a PulseAudio sink port
+ */
 class Port : public QObject {
     Q_OBJECT
 public:

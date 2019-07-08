@@ -5,6 +5,9 @@
 #include <QThread>
 #include <QDebug>
 
+/**
+ * @brief Thread to run the PulseAudio mainloop on.
+ */
 class PAMainloopThread : public QThread {
 public:
     PAMainloopThread(pa_mainloop* mainloop);

@@ -41,8 +41,6 @@ int main(int argc, char *argv[]) {
 	});
 	view->setSource(SailfishApp::pathToMainQml());
 	view->show();
-	QObject::connect(view->rootObject(), SIGNAL(qmlSignal(QString, QString)),
-					 &listener, SLOT(changeOutput(QString, QString)));
     QObject::connect(app, SIGNAL(aboutToQuit()), &listener, SLOT(onAboutQuit()));
 	return app->exec();
 }
@@ -110,11 +108,6 @@ void Listener::eventCallback(pa_context *c, pa_subscription_event_type_t t, uint
             self->m_sinks->getPortModel(idx, false)->update();
         }
     }
-}
-
-void Listener::changeOutput(const QString &sink, const QString &port) {
-    qDebug() << "Changing output to sink: " << sink << ", port: " << port;
-    system(qPrintable("pactl set-sink-port " + sink + " " + port));
 }
 
 void Listener::onAboutQuit() {
