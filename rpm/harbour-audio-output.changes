@@ -11,11 +11,16 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Mon Jul 8 2019 Henk Kalkwater <cjljosten@gmail.com> 0.3.0-1
+- Rewritten to directly invoke the PulseAudio api instead of polling the commandline for changes.
+- Added Chinese translation by Dashinfantry.
+- Replaced the cover with a simple one, because the old one was broken and not functional.
+
 * Sat May 4 2019 Henk Kalkwater <cjljosten@gmail.com> 0.2.0-2
 - Fixed a mistake where the french translation was not included in the package.
+
 * Tue Apr 30 2019 Henk Kalkwater <cjljosten@gmail.com> 0.2.0-1
 - Added French translation by Quentí
-
 
 * Sat Mar 23 2019 Henk Kalkwater <cjljosten@gmail.com> 0.1.1-1
 - Removed a leftover hardcoded reference to "sink.primary". This should make it compatible with devices other than the Xperia X.
