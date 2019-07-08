@@ -1,7 +1,7 @@
 Name: harbour-audio-output
 Summary: Change Audio Output
-Version: 0.2.0
-Release: 2
+Version: 0.3.0
+Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # https://github.com/mer-tools/spectacle/blob/master/data/GROUPS
 Group: Qt/Qt
@@ -12,7 +12,7 @@ License: GPLv3
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
-  System utility to change the output of your sound.
+  System utility to change the output sink
 Configure: none
 # The qtc5 builder inserts macros to allow QtCreator to have fine
 # control over qmake/make execution
