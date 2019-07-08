@@ -94,7 +94,7 @@ Page {
                                 }
                             }
                             onClicked: {
-                                root.qmlSignal(model.sink, model.shortName)
+                                ports.setActivePort(model.name)
                                 Ports.update()
                             }
                         }

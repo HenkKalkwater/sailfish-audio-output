@@ -66,6 +66,9 @@ public:
      */
     void update();
 
+    Q_INVOKABLE
+    void setActivePort(QString name);
+
     static void paSinkInfoCallback(pa_context* c, const pa_sink_info* info, int eol, void* userdata);
 signals:
     void activePortChanged(int newIndex);

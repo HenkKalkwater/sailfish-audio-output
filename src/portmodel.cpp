@@ -79,6 +79,10 @@ void PortModel::paSinkInfoCallback(pa_context* c, const pa_sink_info* info, int 
     }
 }
 
+void PortModel::setActivePort(QString name) {
+    pa_context_set_sink_port_by_index(this->m_context, this->m_index, name.toLatin1().constData(), nullptr, nullptr);
+}
+
 void PortModel::update() {
     pa_context_get_sink_info_by_index(this->m_context, this->m_index, PortModel::paSinkInfoCallback, this);
 }
