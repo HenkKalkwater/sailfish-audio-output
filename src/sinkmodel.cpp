@@ -16,7 +16,7 @@ void SinkModel::paSinkInfoCallback(pa_context* c, const pa_sink_info* info, int 
         self->refreshMutex.unlock();
     } else {
         self->sinks.append(Sink(info));
-        self->portModels.append(PortModel(info->index, info->ports, info->n_ports, info->active_port));
+        self->portModels.append(PortModel(c, info));
     }
 }
 
@@ -53,17 +53,26 @@ void SinkModel::refresh() {
     this->endResetModel();
 }
 
-PortModel* SinkModel::getPortModel(int index) {
-    auto it = std::find_if(this->sinks.begin(), this->sinks.end(),
-        [index](Sink const& sink)->bool {
-           return sink.index() == index;
-    });
-    if (it != this->sinks.end()) {
-        qDebug() << "Found PortModel for index " << index;
-        return &portModels[std::distance(this->sinks.begin(), it)];
+PortModel* SinkModel::getPortModel(int index, bool paIndex) {
+    if (paIndex) {
+        auto it = std::find_if(this->sinks.begin(), this->sinks.end(),
+            [index](Sink const& sink)->bool {
+               return sink.index() == index;
+            });
+        if (it != this->sinks.end()) {
+            qDebug() << "Found PortModel for index " << index;
+            return &portModels[std::distance(this->sinks.begin(), it)];
+        } else {
+            qDebug() << "Invalid paIndex specified: " << index;
+            return nullptr;
+        }
     } else {
-        qDebug() << "Didn't find PortModel for index " << index;
-        return nullptr;
+        if (index >= 0 && index < portModels.size()) {
+            return &portModels[index];
+        } else {
+            qDebug() << "Invalid non-paIndex specified: " << index;
+            return nullptr;
+        }
     }
 }
 

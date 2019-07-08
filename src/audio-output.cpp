@@ -30,13 +30,13 @@ int main(int argc, char *argv[]) {
     listener.init();
     QGuiApplication* app = SailfishApp::application(argc, argv);
 	QQuickView* view = SailfishApp::createView();
-    qRegisterMetaType<PortModel*>("PortModel*");
     qmlRegisterType<PortModel>("me.henkkalkwater", 1, 0, "Ports");
-    qmlRegisterSingletonType<SinkModel>("me.henkkalkwater", 1, 0, "Sinks", [](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
+    qmlRegisterSingletonType<SinkModel>("me.henkkalkwater", 1, 0, "Sinks", [&listener](QQmlEngine* engine, QJSEngine* scriptEngine) -> QObject* {
 		Q_UNUSED(engine)
 		Q_UNUSED(scriptEngine)
 
         SinkModel* sinkModel = new SinkModel(listener.getPaContext());
+        listener.setSinks(sinkModel);
         return sinkModel;
 	});
 	view->setSource(SailfishApp::pathToMainQml());
@@ -97,9 +97,18 @@ void Listener::stateCallback(pa_context* c, void* userdata) {
 }
 
 void Listener::eventCallback(pa_context *c, pa_subscription_event_type_t t, uint32_t idx, void *userdata) {
+    Q_UNUSED(c)
+    Listener* self = reinterpret_cast<Listener*>(userdata);
     qDebug() << "New event callback: type " << t << ", index " << idx;
     if ((t & PA_SUBSCRIPTION_EVENT_FACILITY_MASK) == PA_SUBSCRIPTION_EVENT_SINK) {
-        qDebug() << "Something with a sink";
+        if ((t & PA_SUBSCRIPTION_EVENT_TYPE_MASK) == PA_SUBSCRIPTION_EVENT_CHANGE) {
+            qDebug() << "Sink changed!";
+            if (self->m_sinks == nullptr) {
+                qDebug() << "m_sinks is null?!";
+                return;
+            }
+            self->m_sinks->getPortModel(idx, false)->update();
+        }
     }
 }
 

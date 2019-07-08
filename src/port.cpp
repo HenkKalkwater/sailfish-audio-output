@@ -1,6 +1,7 @@
 #include "port.h"
 
-Port::Port(const pa_sink_port_info* port, size_t index) :
+Port::Port(const pa_sink_port_info* port, size_t index, QObject* parent) :
+    QObject(parent),
     m_rawInfo(port), m_name(port->name), m_description(port->description), m_priority(port->priority),
     m_available(port->available), m_index(index){
 }

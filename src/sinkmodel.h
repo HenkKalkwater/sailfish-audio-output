@@ -38,13 +38,14 @@ public:
     /**
      * @brief Fetches the PortModel with the ports for the sink with the specified index
      * @param index The index of the sink
+     * @param paIndex Wether the index is an index made up by PulseAudio (pa_sink_info->index), or the index
+     * in the array
      * @return The PortModel with the ports for this sink.
      */
     Q_INVOKABLE
-    PortModel* getPortModel(int index);
+    PortModel* getPortModel(int index, bool paIndex = true);
 
     static void paSinkInfoCallback(pa_context* c, const pa_sink_info* info, int eol, void* userdata);
-
 signals:
     void error(QString error);
 private:

@@ -52,6 +52,8 @@ public:
      */
     static void successCallback(pa_context* c, int success, void* userdata);
     int paReady = 0;
+
+    void setSinks(SinkModel* sinks) { this->m_sinks = sinks; }
 public slots:
     void changeOutput(const QString &sink, const QString &port);
     void onAboutQuit();
@@ -62,6 +64,7 @@ private:
      */
     pa_mainloop* mainloop = nullptr;
     pa_context* context = nullptr;
+    SinkModel* m_sinks;
     PAMainloopThread* mainloopThread = nullptr;
 
 };

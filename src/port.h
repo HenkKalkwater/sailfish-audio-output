@@ -8,7 +8,7 @@
 class Port : public QObject {
     Q_OBJECT
 public:
-    Port(const pa_sink_port_info* port, size_t index);
+    Port(const pa_sink_port_info* port, size_t index, QObject* parent = nullptr);
     Port(const Port& other);
     Q_PROPERTY(QString name READ name)
     Q_PROPERTY(QString description READ description)
