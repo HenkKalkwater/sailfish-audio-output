@@ -6,7 +6,7 @@
     <message>
         <location filename="../qml/cover/CoverPage.qml" line="9"/>
         <source>Audio Output</source>
-        <translation type="unfinished"></translation>
+        <translation>音频输出</translation>
     </message>
 </context>
 <context>
@@ -19,7 +19,7 @@
     <message>
         <location filename="../qml/pages/SelectPage.qml" line="40"/>
         <source>No ports were found for this sink</source>
-        <translation type="unfinished"></translation>
+        <translation>未找到任何可用端口</translation>
     </message>
     <message>
         <location filename="../qml/pages/SelectPage.qml" line="70"/>
@@ -42,7 +42,7 @@
         <location filename="../qml/pages/SelectPage.qml" line="91"/>
         <source>Couldn&apos;t find any audio outputs</source>
         <extracomment>Shown when no ports/sinks could be found</extracomment>
-        <translation>无法找到任何音频输出</translation>
+        <translation>无法找到任何音频输出信号</translation>
     </message>
 </context>
 <context>
@@ -51,7 +51,7 @@
         <location filename="../qml/harbour-audio-output.qml" line="19"/>
         <source>Error: %1</source>
         <extracomment>Notification shown when the command line tool gives an error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>错误: %1</translation>
     </message>
 </context>
 </TS>
