@@ -5,7 +5,8 @@
     <name>CoverPage</name>
     <message>
         <source>Audio Output</source>
-        <translation type="unfinished"></translation>
+        <translatorcomment>Er zit een &quot;soft hyphen&quot; tussen de s en de u, zodat het op de cover juist afbreekt</translatorcomment>
+        <translation>Geluids­uitvoer</translation>
     </message>
 </context>
 <context>
@@ -21,7 +22,7 @@
     </message>
     <message>
         <source>Not available</source>
-        <translation>Onbeschikbaar</translation>
+        <translation>Niet beschikbaar</translation>
     </message>
     <message>
         <source>Couldn&apos;t find any audio outputs</source>
@@ -36,7 +37,7 @@
     </message>
     <message>
         <source>No ports were found for this sink</source>
-        <translation type="unfinished"></translation>
+        <translation>Er zijn geen poorten gevonden voor deze uitvoer</translation>
     </message>
 </context>
 <context>
@@ -44,7 +45,7 @@
     <message>
         <source>Error: %1</source>
         <extracomment>Notification shown when the command line tool gives an error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fout: %1</translation>
     </message>
 </context>
 </TS>
