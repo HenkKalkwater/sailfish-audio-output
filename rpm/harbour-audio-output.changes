@@ -11,6 +11,11 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Thu Aug 19 2021 Henk Kalkwater <chris@netsoj.nl> 0.3.1-1
+- Updated Chinese translation by Dashinfantry
+- Updated Dutch translation
+- Added aarch64 build
+
 * Mon Jul 8 2019 Henk Kalkwater <cjljosten@gmail.com> 0.3.0-1
 - Rewritten to directly invoke the PulseAudio api instead of polling the commandline for changes.
 - Added Chinese translation by Dashinfantry.
