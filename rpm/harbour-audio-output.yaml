@@ -1,18 +1,29 @@
 Name: harbour-audio-output
 Summary: Change Audio Output
 Version: 0.3.0
-Release: 2
+Release: 3
 # The contents of the Group field should be one of the groups listed here:
 # https://github.com/mer-tools/spectacle/blob/master/data/GROUPS
 Group: Qt/Qt
-URL: http://example.org/
+URL: https://chris.netsoj.nl/projects/harbour-audio-output/
 License: GPLv3
 # This must be generated before uploading a package to a remote build service.
 # Usually this line does not need to be modified.
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
-  System utility to change the output sink
+  A simple application to choose the audio output of the system.
+
+  %if "%{?vendor}" == "chum"
+  PackageName: Audio Output Chooser
+  Categories: 
+    - Utility
+  Custom:
+    Repo: https://github.com/HenkKalkwater/sailfish-audio-output
+  Icon: https://chris.netsoj.nl/static/img/projects/icons/harbour-audio-output.png
+  Screenshots:
+    - https://chris.netsoj.nl/static/img/projects/images/harbour-audio-output-1.jpg
+  %endif
 Configure: none
 # The qtc5 builder inserts macros to allow QtCreator to have fine
 # control over qmake/make execution
